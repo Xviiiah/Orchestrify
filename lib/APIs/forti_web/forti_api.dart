@@ -7,7 +7,8 @@ import 'dart:convert' as convert;
 import 'package:http/http.dart';
 
 class FortiAPI {
-  static const String _serverIP = 'https://fortigrad-production.up.railway.app';
+  static const String _serverIP =
+      'https://orchestrifybackend-production.up.railway.app';
 
   /// WL
   static Future<List<IPInfo>> fetchWhitelist() async {

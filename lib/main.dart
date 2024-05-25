@@ -3,6 +3,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:forti_grad/firebase_options.dart';
 import 'package:forti_grad/pages/auth_pages/login_page/login_page.dart';
+import 'package:forti_grad/pages/home_page/home_page.dart';
 
 late final FirebaseApp app;
 late final FirebaseAuth auth;
@@ -25,7 +26,7 @@ class MyApp extends StatelessWidget {
         scaffoldBackgroundColor: const Color(0xff212121),
         useMaterial3: true,
       ),
-      home: const LoginPage(),
+      home: const HomePage(),
     );
   }
 }
