@@ -1,0 +1,80 @@
+import 'package:flutter/material.dart';
+
+import '../../../../widgets/input/custom_text_form_field.dart';
+import '../../../../widgets/input/save_button.dart';
+import '../../../../widgets/spacers.dart';
+
+class AddNewWhitelist extends StatefulWidget {
+  const AddNewWhitelist({required this.onAdd, super.key});
+  final Function(String) onAdd;
+  @override
+  State<AddNewWhitelist> createState() => _AddNewWhitelistState();
+}
+
+class _AddNewWhitelistState extends State<AddNewWhitelist> {
+  late TextEditingController _ip;
+  final _ipAddressRegex = RegExp(r'^([0-9]{1,3}\.){3}[0-9]{1,3}$');
+  final _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    _ip = TextEditingController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _ip.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
+    return Column(
+      children: [
+        Text(
+          "New IP",
+          style: Theme.of(context)
+              .textTheme
+              .headlineSmall!
+              .copyWith(color: Colors.white),
+        ),
+        Form(
+          key: _formKey,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              CustomTextFormField(
+                size: size,
+                width: 0.20,
+                textEditingController: _ip,
+                hint: 'xxx.xxx.xxx.xxx',
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Mandatory Field';
+                  } else if (!_ipAddressRegex.hasMatch(value)) {
+                    return "Make sure to input proper IP address";
+                  }
+                  return null;
+                },
+              ),
+              const HSpacer20(),
+              SaveButton(
+                onTap: () {
+                  setState(() {
+                    if (_formKey.currentState!.validate()) {
+                      widget.onAdd(_ip.value.text);
+                      _ip.text = '';
+                    }
+                  });
+                },
+              )
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+}
